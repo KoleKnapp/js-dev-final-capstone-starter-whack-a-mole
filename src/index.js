@@ -23,9 +23,15 @@ let difficulty = "hard";
  *
  */
 function randomInteger(min, max) {
-  // return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+console.log("A random integer between 0 and 10");
+console.log(randomInteger(0, 10));
+console.log("Another random integer between 0 and 10");
+console.log(randomInteger(0, 10));
+console.log("A random number between 600 and 1200");
+console.log(randomInteger(600, 1200));
 /**
  * Sets the time delay given a difficulty parameter.
  *
@@ -42,9 +48,24 @@ function randomInteger(min, max) {
  *
  */
 function setDelay(difficulty) {
-  // TODO: Write your code here.
-  
+  if (difficulty === "easy") {
+    return 1500; // 1.5 seconds for easy
+  } else if (difficulty === "normal") {
+    return 1000; // 1 second for normal
+  } else if (difficulty === "hard") {
+    // Return a random integer between 600 and 1200 for hard
+    return Math.floor(Math.random() * (1200 - 600 + 1)) + 600;
+  } else {
+    throw new Error("Invalid difficulty level. Choose 'easy', 'normal', or 'hard'.");
+  }
 }
+
+// Example usage:
+
+console.log(setDelay("easy"));   // 1500
+console.log(setDelay("normal")); // 1000
+console.log(setDelay("hard"));   // Random number between 600 and 1200
+
 
 /**
  * Chooses a random hole from a list of holes.
@@ -60,10 +81,37 @@ function setDelay(difficulty) {
  * const holes = document.querySelectorAll('.hole');
  * chooseHole(holes) //> returns one of the 9 holes that you defined
  */
-function chooseHole(holes) {
-  // TODO: Write your code here.
+const holes = document.querySelectorAll('.hole');
 
+let lastHole = 0;
+
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function chooseHole(holes) {
+  const index = randomInteger(0, 2);
+  const hole = holes[index];
+  if (hole === lastHole) {
+    return chooseHole(holes);
+  }
+  lastHole = hole;
+  return hole;
+}
+
+// example
+let hole = chooseHole(holes);
+
+// highlight random hole
+hole.classList.toggle("highlight");
+console.log(hole.innerHTML);
+console.log(hole.classList);
+
+// choose another hole and highlight it too
+hole = chooseHole(holes);
+hole.classList.toggle("highlight");
+console.log(hole.innerHTML);
+console.log(hole.classList);
 
 /**
 *
@@ -272,4 +320,3 @@ window.time = time;
 window.setDuration = setDuration;
 window.toggleVisibility = toggleVisibility;
 window.setEventListeners = setEventListeners;
-
